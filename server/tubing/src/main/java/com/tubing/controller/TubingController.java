@@ -4,6 +4,7 @@ import com.tubing.service.TubingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,9 +14,9 @@ public class TubingController {
     @Autowired
     TubingService _service;
 
-    @RequestMapping("{query}")
+    @RequestMapping(value = "{query}", method = RequestMethod.POST)
     public void add(@PathVariable("query") String query) {
 
-        _service.addToPlaylist(query);
+        _service.process(query);
     }
 }
