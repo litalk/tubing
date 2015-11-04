@@ -58,18 +58,10 @@
             <version>${project.youtube.version}</version>
         </dependency>
 
-        <!-- Required for any code that makes calls to the Google Analytics API -->
         <dependency>
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-youtubeAnalytics</artifactId>
             <version>${project.youtube.analytics.version}</version>
-        </dependency>
-
-        <!-- This dependency is only used for the Topics API sample, which requires the Jackson JSON parser -->
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.4</version>
         </dependency>
 
         <dependency>
