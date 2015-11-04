@@ -1,6 +1,4 @@
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
-/build
+/server/tubing/src/main/resources/client_secret_windy.json
+.idea
+/server/tubing/target/classes/client_secret_windy.json
+target
