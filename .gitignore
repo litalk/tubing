@@ -1,0 +1,7 @@
+/client/android/share-it/target/android-classes/com/fasterxml/jackson/annotation/*.class
+/client/android/.idea
+/client/android/share-it/target/android-classes/bu/test
+/client/android/share-it/target/android-classes/com/fasterxml/jackson/core/*.class
+*.class
+target
+/client/android/share-it/*.iml
