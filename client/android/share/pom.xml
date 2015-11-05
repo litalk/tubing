@@ -30,8 +30,14 @@
             <artifactId>jersey-media-json-jackson</artifactId>
             <version>2.22.1</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>com.google.android.gms</groupId>
+            <artifactId>play-services</artifactId>
+            <version>6.5.87</version>
+            <type>aar</type>
+            <scope>system</scope>
+            <systemPath>${env.ANDROID_HOME}/extras/google/m2repository/com/google/android/gms/play-services/6.5.87/play-services-6.5.87.aar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
