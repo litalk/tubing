@@ -90,7 +90,7 @@ public abstract class AbstractGetNameTask extends AsyncTask<Void, Void, Void>{
         if (sc == 200) {
           InputStream is = con.getInputStream();
           String name = getFirstName(readResponse(is));
-          mActivity.show("Hello " + name + "!");
+          mActivity.show("Tubing says Hey " + name + "!");
           is.close();
           return;
         } else if (sc == 401) {
