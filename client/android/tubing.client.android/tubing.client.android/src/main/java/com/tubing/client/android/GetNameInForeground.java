@@ -44,7 +44,7 @@ public class GetNameInForeground extends AbstractGetNameTask {
       } catch (UserRecoverableAuthException userRecoverableException) {
           // GooglePlayServices.apk is either old, disabled, or not present, which is
           // recoverable, so we need to show the user some UI through the activity.
-          mActivity.handleException(userRecoverableException);
+          //mActivity.handleException(userRecoverableException);
       } catch (GoogleAuthException fatalException) {
           onError("Unrecoverable error " + fatalException.getMessage(), fatalException);
       }
