@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -52,8 +53,8 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
         // code exchange.
         String serverClientId = getString(R.string.server_client_id);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestServerAuthCode(serverClientId)
                 .requestEmail()
+                .requestServerAuthCode(serverClientId)
                 .build();
         // [END configure_signin]
 
@@ -62,6 +63,10 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        signInButton.setScopes(gso.getScopeArray());
     }
 
     private void getAuthCode() {
@@ -95,15 +100,14 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
                 });
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_GET_AUTH_CODE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            Log.d(TAG, "onActivityResult:GET_AUTH_CODE:success:" + result.getStatus().isSuccess());
-
+            Log.d(TAG, "onActivityResult:GET_AUTH_CODE:status:" + result.getStatus());
+            Log.d(TAG, "onActivityResult:GET_AUTH_CODE:account:" + result.getSignInAccount().getDisplayName());
             if (result.isSuccess()) {
                 // [START get_auth_code]
                 GoogleSignInAccount acct = result.getSignInAccount();
