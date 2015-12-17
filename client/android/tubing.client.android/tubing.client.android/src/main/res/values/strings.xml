@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Tubing</string>
-    <string name="title_activity_launcher">Configure</string>
+    <string name="title_activity_launcher">Tubing</string>
     <string name="title_text">Google Sign-In\nQuickstart</string>
 
     <!-- Sign-in status messages -->
@@ -35,6 +35,6 @@
     <!-- TODO(user): replace with your real server client ID -->
     <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
          from https://console.developers.google.com/ -->
-    <string name="server_client_id">470859838725-qbfn6fsiafna4bp0idubio9hgetmgrtg.apps.googleusercontent.com</string>
+    <string name="server_client_id">470859838725-vdi4vhh6saralhpprq0vhgjlqi1sekeg.apps.googleusercontent.com</string>
 
 </resources>
