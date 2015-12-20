@@ -14,6 +14,12 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.tubing.client.android.http.AsyncHttpClient;
+import com.tubing.client.android.http.AsyncHttpClientPost;
+import com.tubing.client.android.http.HttpResponse;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Demonstrates retrieving an offline access one-time code for the current Google user, which
@@ -114,6 +120,18 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
                 updateUI(true);
 
                 // TODO(user): send code to server and exchange for access/refresh/ID tokens.
+                try {
+                    new AsyncHttpClientPost(authCode, null, new AsyncHttpClient.PostHttpCall() {
+                        @Override
+                        public void action(HttpResponse response) {
+
+                            mAuthCodeTextView.setText(response.getData().toString());
+                            updateUI(true);
+                        }
+                    }).execute(new URL("http://localhost:8080/login"));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
                 // [END get_auth_code]
             } else {
                 // Show signed-out UI.
@@ -124,6 +142,7 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
