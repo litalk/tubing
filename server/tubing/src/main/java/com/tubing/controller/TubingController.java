@@ -14,6 +14,13 @@ public class TubingController {
     @Autowired
     TubingService _service;
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public void login(){//@RequestBody User user) {
+
+        System.out.println("hello");
+        //_service.process(query);
+    }
+
     @RequestMapping(value = "{query}", method = RequestMethod.POST)
     public void add(@PathVariable("query") String query) {
 
