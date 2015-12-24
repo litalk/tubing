@@ -2,5 +2,15 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/tubing/common/ObjectMapperUtils.java" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/tubing/common/StringUtils.java" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/tubing/common/TubingConstants.java" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/tubing/common/TubingException.java" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/tubing/rest/RestClient.java" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/tubing/rest/RestClientException.java" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/tubing/rest/RestClientImpl.java" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/tubing/rest/RestClientResponse.java" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/tubing/rest/RestClientResponseImpl.java" charset="windows-1255" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/tubing/rest/RestRequest.java" charset="windows-1255" />
   </component>
 </project>

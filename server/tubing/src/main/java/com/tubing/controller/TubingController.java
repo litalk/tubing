@@ -1,11 +1,10 @@
 package com.tubing.controller;
 
+import com.tubing.common.ObjectMapperUtils;
+import com.tubing.dal.model.Account;
 import com.tubing.service.TubingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tubing")
@@ -14,14 +13,13 @@ public class TubingController {
     @Autowired
     TubingService _service;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public void login(){//@RequestBody User user) {
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public void login(@RequestBody String account) {
 
-        System.out.println("hello");
-        //_service.process(query);
+        System.out.println(ObjectMapperUtils.to(account, Account.class));
     }
 
-    @RequestMapping(value = "{query}", method = RequestMethod.POST)
+    @RequestMapping(value = "{query}", method = RequestMethod.GET)
     public void add(@PathVariable("query") String query) {
 
         _service.process(query);
