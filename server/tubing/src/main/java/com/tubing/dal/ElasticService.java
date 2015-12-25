@@ -16,9 +16,9 @@ public class ElasticService {
     private static final String ELASTICSEARCH_PORT = "9200";
     private static final String INDEX = "tubing";
 
-    public static <TElasticEntity extends ElasticEntity> void insert(TElasticEntity entity) {
+    public static <TElasticEntity extends ElasticEntity> RestClientResponse<String> insert(TElasticEntity entity) {
 
-        RestClientImpl.getInstance().post(new RestRequest(getUri(entity.getType()), ObjectMapperUtils.from(entity)));
+        return RestClientImpl.getInstance().post(new RestRequest(getUri(entity.getType()), ObjectMapperUtils.from(entity)));
     }
 
     public static <TElasticEntity extends ElasticEntity> TElasticEntity search(Class<TElasticEntity> clazz, String entityType, String query) {
