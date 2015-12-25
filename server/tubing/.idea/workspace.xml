@@ -8,16 +8,13 @@
       <change type="MOVED" beforePath="C:\Effi\Dev\tubing\server\tubing\src\main\java\com\tubing\google\YouTubePlaylist.java" afterPath="$PROJECT_DIR$/src/main/java/com/tubing/logic/google/YouTubePlaylist.java" />
       <change type="MOVED" beforePath="C:\Effi\Dev\tubing\server\tubing\src\main\java\com\tubing\google\YouTubeSearch.java" afterPath="$PROJECT_DIR$/src/main/java/com/tubing/logic/google/YouTubeSearch.java" />
       <change type="MOVED" beforePath="C:\Effi\Dev\tubing\server\tubing\src\main\java\com\tubing\google\YouTubeService.java" afterPath="$PROJECT_DIR$/src/main/java/com/tubing/logic/google/YouTubeService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tubing/dal/ElasticService.java" afterPath="$PROJECT_DIR$/src/main/java/com/tubing/dal/ElasticService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../client/android/tubing.client.android/tubing.client.android/src/main/java/com/tubing/client/android/http/HttpClient.java" afterPath="$PROJECT_DIR$/../../client/android/tubing.client.android/tubing.client.android/src/main/java/com/tubing/client/android/http/HttpClient.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/tubing/dal/itest/ITestElasticService.java" afterPath="$PROJECT_DIR$/src/test/java/com/tubing/dal/itest/ITestElasticService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../client/android/tubing.client.android/tubing.client.android/src/main/java/com/tubing/client/android/ServerAuthCodeActivity.java" afterPath="$PROJECT_DIR$/../../client/android/tubing.client.android/tubing.client.android/src/main/java/com/tubing/client/android/ServerAuthCodeActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tubing/service/QueryProcessor/ShazamQueryProcessor.java" afterPath="$PROJECT_DIR$/src/main/java/com/tubing/service/QueryProcessor/ShazamQueryProcessor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../client/android/tubing.client.android/tubing.client.android/src/main/java/com/tubing/client/android/common/StringUtils.java" afterPath="$PROJECT_DIR$/../../client/android/tubing.client.android/tubing.client.android/src/main/java/com/tubing/client/android/common/StringUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/tubing/controller/TestTubingController.java" afterPath="$PROJECT_DIR$/src/test/java/com/tubing/controller/TestTubingController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tubing/controller/TubingController.java" afterPath="$PROJECT_DIR$/src/main/java/com/tubing/controller/TubingController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/tubing/service/TubingService.java" afterPath="$PROJECT_DIR$/src/main/java/com/tubing/service/TubingService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="tubing.iws" />
@@ -1847,7 +1844,7 @@
       <workItem from="1450727514688" duration="11631000" />
       <workItem from="1450947797122" duration="19044000" />
       <workItem from="1450975635802" duration="2394000" />
-      <workItem from="1451066837944" duration="1095000" />
+      <workItem from="1451066837944" duration="1290000" />
     </task>
     <task id="LOCAL-00001" summary="Added QuerryProcessors, changed GET to POST">
       <created>1446643799755</created>
@@ -1855,11 +1852,17 @@
       <option name="project" value="LOCAL" />
       <updated>1446643799755</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="login add if not exists a user in elasticsearch">
+      <created>1451074500900</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1451074500900</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45674000" />
+    <option name="totallyTimeSpent" value="45869000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1937,7 +1940,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added QuerryProcessors, changed GET to POST" />
     <MESSAGE value="move google package into logic package" />
-    <option name="LAST_COMMIT_MESSAGE" value="move google package into logic package" />
+    <MESSAGE value="login add if not exists a user in elasticsearch" />
+    <option name="LAST_COMMIT_MESSAGE" value="login add if not exists a user in elasticsearch" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

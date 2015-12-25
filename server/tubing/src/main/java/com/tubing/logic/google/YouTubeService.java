@@ -1,4 +1,4 @@
-package com.tubing.google;
+package com.tubing.logic.google;
 
 import com.google.api.services.youtube.YouTube;
 

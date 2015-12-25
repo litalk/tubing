@@ -1,4 +1,4 @@
-package com.tubing.google;
+package com.tubing.logic.google;
 
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.*;
@@ -20,10 +20,12 @@ public class YouTubePlaylist {
         }
     }
 
-    private static String insertPlaylist() throws IOException {
+    /**
+     * This code constructs the playlist resource that is being inserted.
+     * It defines the playlist's title, description, and privacy status.
+     */
+    private static String createPlaylist() throws IOException {
 
-        // This code constructs the playlist resource that is being inserted.
-        // It defines the playlist's title, description, and privacy status.
         PlaylistSnippet playlistSnippet = new PlaylistSnippet();
         playlistSnippet.setTitle("Test Playlist " + Calendar.getInstance().getTime());
         playlistSnippet.setDescription("A private playlist created with the YouTube API v3");
@@ -48,8 +50,8 @@ public class YouTubePlaylist {
         System.out.println(" - Description: " + playlistInserted.getSnippet().getDescription());
         System.out.println(" - Posted: " + playlistInserted.getSnippet().getPublishedAt());
         System.out.println(" - Channel: " + playlistInserted.getSnippet().getChannelId() + "\n");
-        return playlistInserted.getId();
 
+        return playlistInserted.getId();
     }
 
     private static String insertPlaylistItem(String playlistId, String videoId) throws IOException {

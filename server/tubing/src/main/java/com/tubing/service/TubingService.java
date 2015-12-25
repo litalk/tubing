@@ -1,7 +1,7 @@
 package com.tubing.service;
 
-import com.tubing.google.YouTubePlaylist;
-import com.tubing.google.YouTubeSearch;
+import com.tubing.logic.google.YouTubePlaylist;
+import com.tubing.logic.google.YouTubeSearch;
 import com.tubing.service.QueryProcessor.QueryProcessor;
 import com.tubing.service.QueryProcessor.QueryProcessorFactory;
 import org.springframework.stereotype.Service;
