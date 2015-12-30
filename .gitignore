@@ -11,3 +11,4 @@ target
 /server/tubing/tubing.iml
 /client/android/tubing.client.android/tubing.client.android.iml
 /client/android/tubing.client.android/tubing.client.android/tubing.client.android-tubing.client.android.iml
+.mvn
