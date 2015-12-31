@@ -6,7 +6,16 @@ public class YouTubeService {
 
     private static YouTube _youtube;
 
-    static {
+    public synchronized static YouTube getInstance() {
+
+        if(_youtube == null) {
+            initialize();
+        }
+
+        return _youtube;
+    }
+
+    private static void initialize() {
 
         _youtube = new YouTube.Builder(
                 GoogleCredentialContainer.HTTP_TRANSPORT,
@@ -14,10 +23,5 @@ public class YouTubeService {
                 GoogleCredentialContainer.getCredential()).
                 setApplicationName("Tubing").
                 build();
-    }
-
-    public static YouTube getInstance() {
-
-        return _youtube;
     }
 }
