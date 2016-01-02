@@ -18,15 +18,7 @@ public class HttpClient {
             String queryString,
             Map<String, String> headers) {
 
-        HttpResponse ret = null;
-        try {
-            ret = doHttp(Constants.GET, url.toString(), queryString, null, headers);
-        } catch (Exception e){
-         int i = 0;
-            i++;
-        }
-
-        return ret;
+        return doHttp(Constants.GET, url.toString(), queryString, null, headers);
     }
     
     public HttpResponse post(

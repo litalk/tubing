@@ -14,6 +14,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
 import com.tubing.client.android.http.AsyncHttpClient;
 import com.tubing.client.android.http.AsyncHttpClientPost;
@@ -61,6 +62,7 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestServerAuthCode(serverClientId)
+                .requestScopes(new Scope("https://www.googleapis.com/auth/youtube"))
                 .build();
         // [END configure_signin]
 
@@ -123,7 +125,7 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
                 mAuthCodeTextView.setText(getString(R.string.auth_code_fmt, authCode));
                 updateUI(true);
 
-                // TODO(user): send code to server and exchange for access/refresh/ID tokens.
+                // Send code to server and exchange for access/refresh/ID tokens.
                 try {
                     new AsyncHttpClientPost(authCode, null, new AsyncHttpClient.PostHttpCall() {
                         @Override
