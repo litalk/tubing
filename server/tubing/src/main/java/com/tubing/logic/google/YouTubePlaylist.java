@@ -6,11 +6,16 @@ import com.google.api.services.youtube.model.*;
 import java.io.IOException;
 import java.util.Calendar;
 
-public class YouTubePlaylist {
+public class YouTubePlayList extends YouTubeAPI {
 
     private static final String PLAYLIST_ID = "PLAhH93nRSsIOd90xqIVy_swYnSZz6MjX0";
 
-    public static void update(String videoId) {
+    public YouTubePlayList(YouTube youTube) {
+
+        super(youTube);
+    }
+
+    public void update(String videoId) {
 
         try {
             //String playlistId = insertPlaylist();
@@ -24,7 +29,7 @@ public class YouTubePlaylist {
      * This code constructs the playlist resource that is being inserted.
      * It defines the playlist's title, description, and privacy status.
      */
-    private static String createPlaylist() throws IOException {
+    private String createPlaylist() throws IOException {
 
         PlaylistSnippet playlistSnippet = new PlaylistSnippet();
         playlistSnippet.setTitle("Test Playlist " + Calendar.getInstance().getTime());
@@ -40,7 +45,7 @@ public class YouTubePlaylist {
         // argument identifies the resource parts that the API response should
         // contain, and the second argument is the playlist being inserted.
         YouTube.Playlists.Insert playlistInsertCommand =
-                YouTubeService.getInstance().playlists().insert("snippet,status", youTubePlaylist);
+                getYouTube().playlists().insert("snippet,status", youTubePlaylist);
         Playlist playlistInserted = playlistInsertCommand.execute();
 
         // Print data from the API response and return the new playlist's
@@ -54,7 +59,7 @@ public class YouTubePlaylist {
         return playlistInserted.getId();
     }
 
-    private static String insertPlaylistItem(String playlistId, String videoId) throws IOException {
+    private String insertPlaylistItem(String playlistId, String videoId) throws IOException {
 
         // Define a resourceId that identifies the video being added to the
         // playlist.
@@ -78,7 +83,7 @@ public class YouTubePlaylist {
         // that the API response should contain, and the second argument is
         // the playlist item being inserted.
         YouTube.PlaylistItems.Insert playlistItemsInsertCommand =
-                YouTubeService.getInstance().playlistItems().insert("snippet,contentDetails", playlistItem);
+                getYouTube().playlistItems().insert("snippet,contentDetails", playlistItem);
         PlaylistItem returnedPlaylistItem = playlistItemsInsertCommand.execute();
 
         // Print data from the API response and return the new playlist
@@ -88,7 +93,7 @@ public class YouTubePlaylist {
         System.out.println(" - Video id: " + returnedPlaylistItem.getSnippet().getResourceId().getVideoId());
         System.out.println(" - Posted: " + returnedPlaylistItem.getSnippet().getPublishedAt());
         System.out.println(" - Channel: " + returnedPlaylistItem.getSnippet().getChannelId());
-        return returnedPlaylistItem.getId();
 
+        return returnedPlaylistItem.getId();
     }
 }

@@ -1,6 +1,8 @@
 package com.tubing.controller;
 
-import com.tubing.logic.google.YouTubePlaylist;
+import com.google.api.services.youtube.YouTube;
+import com.tubing.logic.google.YouTubeBuilder;
+import com.tubing.logic.google.YouTubePlayList;
 import com.tubing.logic.google.YouTubeSearch;
 import com.tubing.logic.AccountLogic;
 import com.tubing.common.ObjectMapperUtils;
@@ -36,10 +38,11 @@ public class TubingController {
     }
 
     @RequestMapping(value = "playlist", method = RequestMethod.POST)
-    public void add(@RequestBody String query) {
+    public void addToPlayList(@RequestBody String query) {
 
         final String youtubeQuery = extractYoutubeQuery(query);
-        new YouTubePlaylist().update(new YouTubeSearch().search(youtubeQuery));
+        YouTube youTube = YouTubeBuilder.build("");
+        new YouTubePlayList(youTube).update(new YouTubeSearch(youTube).search(youtubeQuery));
     }
 
     private String extractYoutubeQuery(String query) {

@@ -20,9 +20,14 @@ import com.google.api.services.youtube.model.SearchResult;
 
 import java.io.IOException;
 
-public class YouTubeSearch {
+public class YouTubeSearch extends YouTubeAPI {
 
     private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
+
+    public YouTubeSearch(YouTube youTube) {
+
+        super(youTube);
+    }
 
     public String search(String query) {
 
@@ -41,7 +46,7 @@ public class YouTubeSearch {
     private YouTube.Search.List getSearchService(String query) throws IOException {
 
         // Define the API request for retrieving search results.
-        YouTube.Search.List ret = YouTubeService.getInstance().search().list("id,snippet");
+        YouTube.Search.List ret = getYouTube().search().list("id,snippet");
         ret.setQ(query);
         // Restrict the search results to only include videos. See:
         // https://developers.google.com/youtube/v3/docs/search/list#type
