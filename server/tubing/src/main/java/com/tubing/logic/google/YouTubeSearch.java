@@ -17,6 +17,7 @@ package com.tubing.logic.google;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
+import com.tubing.common.TubingException;
 
 import java.io.IOException;
 
@@ -31,16 +32,15 @@ public class YouTubeSearch extends YouTubeAPI {
 
     public String search(String query) {
 
-        SearchResult ret = null;
         try {
             SearchListResponse searchResponse = getSearchService(query).execute();
-            ret = searchResponse.getItems().get(0);
+            SearchResult ret = searchResponse.getItems().get(0);
             print(query, ret);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        return ret.getId().getVideoId();
+            return ret.getId().getVideoId();
+        } catch (Exception e) {
+            throw new TubingException(String.format("Failed to search using YouTube, query: %s", query), e);
+        }
     }
 
     private YouTube.Search.List getSearchService(String query) throws IOException {

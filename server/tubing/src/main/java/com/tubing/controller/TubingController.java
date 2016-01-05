@@ -16,6 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 @RestController
 @RequestMapping("/tubing")
 public class TubingController {
@@ -38,10 +41,10 @@ public class TubingController {
     }
 
     @RequestMapping(value = "playlist", method = RequestMethod.POST)
-    public void addToPlayList(@RequestBody String query) {
+    public void addToPlayList(@RequestBody String accessToken) throws UnsupportedEncodingException {
 
-        final String youtubeQuery = extractYoutubeQuery(query);
-        YouTube youTube = YouTubeBuilder.build("");
+        final String youtubeQuery = extractYoutubeQuery("I just used Shazam to discover Llévame Contigo by Romeo Santos. http://shz.am/t54018231");
+        YouTube youTube = YouTubeBuilder.build(URLDecoder.decode(accessToken, "UTF-8"));
         new YouTubePlayList(youTube).update(new YouTubeSearch(youTube).search(youtubeQuery));
     }
 

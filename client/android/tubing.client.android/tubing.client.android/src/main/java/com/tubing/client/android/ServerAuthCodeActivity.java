@@ -134,7 +134,7 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
                             mAuthCodeTextView.setText(response.getData().toString());
                             updateUI(true);
                         }
-                    }).execute(new URL("http://localhost:8080/login"));
+                    }).execute(new URL("http://10.10.2.115:8080/tubing/playlist"));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }

@@ -3,7 +3,6 @@ package com.tubing.controller;
 import com.tubing.common.ObjectMapperUtils;
 import com.tubing.dal.model.Account;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -61,6 +60,6 @@ public class ITestTubingController {
     public String getUserJson() {
 
         return ObjectMapperUtils.from(
-                new Account("grover@gmail.com", "Krovi Somsom", "470859838725a3b"));
+                new Account("grover@gmail.com", "Krovi Sumsum", "470859838725a3b"));
     }
 }
