@@ -1,20 +1,23 @@
 package com.tubing.controller;
 
 import com.google.api.services.youtube.YouTube;
-import com.tubing.logic.google.YouTubeBuilder;
-import com.tubing.logic.google.YouTubePlayList;
-import com.tubing.logic.google.YouTubeSearch;
-import com.tubing.logic.AccountLogic;
 import com.tubing.common.ObjectMapperUtils;
 import com.tubing.dal.ElasticService;
 import com.tubing.dal.model.Account;
+import com.tubing.logic.AccountLogic;
+import com.tubing.logic.google.YouTubeBuilder;
+import com.tubing.logic.google.YouTubePlayList;
+import com.tubing.logic.google.YouTubeSearch;
 import com.tubing.service.QueryProcessor.QueryProcessor;
 import com.tubing.service.QueryProcessor.QueryProcessorFactory;
 import com.tubing.service.TubingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -41,10 +44,11 @@ public class TubingController {
     }
 
     @RequestMapping(value = "playlist", method = RequestMethod.POST)
-    public void addToPlayList(@RequestBody String accessToken) throws UnsupportedEncodingException {
+    public void addToPlayList(@RequestBody String authCode) throws UnsupportedEncodingException {
 
         final String youtubeQuery = extractYoutubeQuery("I just used Shazam to discover Llévame Contigo by Romeo Santos. http://shz.am/t54018231");
-        YouTube youTube = YouTubeBuilder.build(URLDecoder.decode(accessToken, "UTF-8"));
+        YouTube youTube = YouTubeBuilder.build(
+                    URLDecoder.decode(authCode, "UTF-8"));
         new YouTubePlayList(youTube).update(new YouTubeSearch(youTube).search(youtubeQuery));
     }
 

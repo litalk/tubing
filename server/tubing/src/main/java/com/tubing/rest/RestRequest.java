@@ -23,12 +23,17 @@ public class RestRequest {
     
     public RestRequest(String uri, Object entity) {
         
+        this(uri, entity, MediaType.APPLICATION_JSON);
+    }
+
+    public RestRequest(String uri, Object entity, String requestContentType) {
+
         _uri = uri;
         _entity = entity;
-        _requestMediaType = MediaType.APPLICATION_JSON;
+        _requestMediaType = requestContentType;
         _responseMediaType = MediaType.APPLICATION_JSON;
     }
-    
+
     public String getUri() {
         
         return _uri;
