@@ -32,15 +32,21 @@ public class YouTubeSearch extends YouTubeAPI {
 
     public String search(String query) {
 
+        String videoId = null;
         try {
             SearchListResponse searchResponse = getSearchService(query).execute();
-            SearchResult ret = searchResponse.getItems().get(0);
-            print(query, ret);
-
-            return ret.getId().getVideoId();
+            if (searchResponse.getItems().size() > 0) {
+                SearchResult searchResult = searchResponse.getItems().get(0);
+                print(query, searchResult);
+                videoId = searchResult.getId().getVideoId();
+            } else {
+                System.out.println(String.format("No videos found for query: %s", query));
+            }
         } catch (Exception e) {
             throw new TubingException(String.format("Failed to search using YouTube, query: %s", query), e);
         }
+
+        return videoId;
     }
 
     private YouTube.Search.List getSearchService(String query) throws IOException {
