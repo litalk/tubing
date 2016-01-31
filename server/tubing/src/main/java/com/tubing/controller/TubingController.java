@@ -46,10 +46,10 @@ public class TubingController {
     @RequestMapping(value = "playlist", method = RequestMethod.POST)
     public void addToPlayList(@RequestBody String authCode) throws UnsupportedEncodingException {
 
-        final String youtubeQuery = extractYoutubeQuery("I just used Shazam to discover Llévame Contigo by Romeo Santos. http://shz.am/t54018231");
+        final String youtubeQuery = extractYoutubeQuery("I just used Shazam to discover Llevame Contigo by Romeo Santos. http://shz.am/t54018231");
         YouTube youTube = YouTubeBuilder.build(
                     URLDecoder.decode(authCode, "UTF-8"));
-        new YouTubePlayList(youTube).update(new YouTubeSearch(youTube).search(youtubeQuery));
+        new YouTubePlayList(youTube).update(new YouTubeSearch(youTube).searchVideo(youtubeQuery));
     }
 
     private String extractYoutubeQuery(String query) {

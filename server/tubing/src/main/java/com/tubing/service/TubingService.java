@@ -15,7 +15,7 @@ public class TubingService {
 
         final String youtubeQuery = extractYoutubeQuery(query);
         YouTube youTube = YouTubeBuilder.build(accessToken);
-        new YouTubePlayList(youTube).update(new YouTubeSearch(youTube).search(youtubeQuery));
+        new YouTubePlayList(youTube).update(new YouTubeSearch(youTube).searchVideo(youtubeQuery));
     }
 
     private String extractYoutubeQuery(String query) {
