@@ -1,11 +1,15 @@
 package com.tubing.client.android;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -20,36 +24,32 @@ import com.tubing.client.android.http.AsyncHttpClient;
 import com.tubing.client.android.http.AsyncHttpClientPost;
 import com.tubing.client.android.http.HttpResponse;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 /**
- * Demonstrates retrieving an offline access one-time code for the current Google user, which
- * can be exchanged by your server for an access token and refresh token.
+ * Demonstrates retrieving an offline access one-time code for the current Google user, which can be
+ * exchanged by your server for an access token and refresh token.
  */
-public class ServerAuthCodeActivity extends AppCompatActivity implements
-        GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener {
-
+public class ServerAuthCodeActivity extends AppCompatActivity
+        implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+        
     public static final String TAG = "ServerAuthCodeActivity";
     private static final int RC_GET_AUTH_CODE = 9003;
-
+    
     private GoogleApiClient mGoogleApiClient;
     private TextView mAuthCodeTextView;
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        
         // Views
         mAuthCodeTextView = (TextView) findViewById(R.id.detail);
-
+        
         // Button click listeners
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.disconnect_button).setOnClickListener(this);
-
+        
         // [START configure_signin]
         // Configure sign-in to request offline access to the user's ID, basic
         // profile, and Google Drive. The first time you request a code you will
@@ -59,24 +59,26 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
         // DEFAULT_SIGN_IN) you will also get an ID Token as a result of the
         // code exchange.
         String serverClientId = getString(R.string.server_client_id);
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestServerAuthCode(serverClientId)
-                .requestScopes(new Scope("https://www.googleapis.com/auth/youtube"))
-                .build();
-        // [END configure_signin]
-
+        GoogleSignInOptions gso =
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail()
+                //.requestIdToken(serverClientId)
+                .requestServerAuthCode(serverClientId).requestScopes(
+                        new Scope("https://www.googleapis.com/auth/youtube")).build();
+                        // [END configure_signin]
+                        
         // Build GoogleAPIClient with the Google Sign-In API and the above options.
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
+        mGoogleApiClient =
+                new GoogleApiClient.Builder(this).enableAutoManage(
+                        this /* FragmentActivity */,
+                        this /* OnConnectionFailedListener */).addApi(
+                                Auth.GOOGLE_SIGN_IN_API,
+                                gso).build();
+                                
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setScopes(gso.getScopeArray());
     }
-
+    
     private void getAuthCode() {
         // Start the retrieval process for a server auth code.  If requested, ask for a refresh
         // token.  Otherwise, only get an access token if a refresh token has been previously
@@ -85,10 +87,11 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_GET_AUTH_CODE);
     }
-
+    
     private void signOut() {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
+                    
                     @Override
                     public void onResult(Status status) {
                         Log.d(TAG, "signOut:onResult:" + status);
@@ -96,10 +99,11 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
                     }
                 });
     }
-
+    
     private void revokeAccess() {
         Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
+                    
                     @Override
                     public void onResult(Status status) {
                         Log.d(TAG, "revokeAccess:onResult:" + status);
@@ -107,34 +111,45 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
                     }
                 });
     }
-
+    
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        
         if (requestCode == RC_GET_AUTH_CODE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             Log.d(TAG, "onActivityResult:GET_AUTH_CODE:status:" + result.getStatus());
-            Log.d(TAG, "onActivityResult:GET_AUTH_CODE:account:" + result.getSignInAccount().getDisplayName());
+            Log.d(
+                    TAG,
+                    "onActivityResult:GET_AUTH_CODE:account:"
+                         + result.getSignInAccount().getDisplayName());
             if (result.isSuccess()) {
                 // [START get_auth_code]
                 GoogleSignInAccount acct = result.getSignInAccount();
                 String authCode = acct.getServerAuthCode();
-
+                String idToken = acct.getIdToken();
+                
                 // Show signed-in UI.
                 mAuthCodeTextView.setText(getString(R.string.auth_code_fmt, authCode));
                 updateUI(true);
-
+                
                 // Send code to server and exchange for access/refresh/ID tokens.
                 try {
                     new AsyncHttpClientPost(authCode, null, new AsyncHttpClient.PostHttpCall() {
+                        
                         @Override
                         public void action(HttpResponse response) {
-
-                            mAuthCodeTextView.setText(response.getData().toString());
+                            
+                            if (response.isOk()) {
+                                mAuthCodeTextView.setText("Tubing OK");
+                            } else {
+                                mAuthCodeTextView.setText(
+                                        "Tubing Bad Response :( "
+                                                          + response.getFailure().getMessage());
+                            }
                             updateUI(true);
                         }
-                    }).execute(new URL("http://10.10.2.115:8080/tubing/playlist"));
+                    }).execute(new URL("http://192.168.56.1:8080/tubing/playlist"));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -145,30 +160,30 @@ public class ServerAuthCodeActivity extends AppCompatActivity implements
             }
         }
     }
-
+    
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
     }
-
+    
     private void updateUI(boolean signedIn) {
         if (signedIn) {
             ((TextView) findViewById(R.id.status)).setText(R.string.signed_in);
-
+            
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
             ((TextView) findViewById(R.id.status)).setText(R.string.signed_out);
             mAuthCodeTextView.setText(getString(R.string.auth_code_fmt, "null"));
-
+            
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
         }
     }
-
+    
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

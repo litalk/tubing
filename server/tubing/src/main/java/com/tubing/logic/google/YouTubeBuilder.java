@@ -26,7 +26,7 @@ public class YouTubeBuilder {
         return ret;
     }
 
-    public static String getAccessToken(String authCode) {
+    private static String getAccessToken(String authCode) {
 
         String ret;
         try {

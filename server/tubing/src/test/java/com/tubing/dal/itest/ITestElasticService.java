@@ -1,11 +1,11 @@
 package com.tubing.dal.itest;
 
-import com.tubing.logic.AccountLogic;
 import com.tubing.dal.ElasticService;
 import com.tubing.dal.model.Account;
+import com.tubing.logic.AccountLogic;
 import org.junit.Assert;
 import org.junit.Ignore;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import java.util.UUID;
 

@@ -17,7 +17,9 @@ public abstract class AsyncHttpClient extends AsyncTask<URL, Integer, HttpRespon
     protected HttpResponse doInBackground(URL... urls) {
 
         HttpResponse ret = httpCall(urls[0]);
-        _delegate.action(ret);
+        if(_delegate != null) {
+            _delegate.action(ret);
+        }
 
         return ret;
     }

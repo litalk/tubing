@@ -4,11 +4,10 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.*;
 
 import java.io.IOException;
-import java.util.Calendar;
 
 public class YouTubePlayList extends YouTubeAPI {
 
-    private static final String PLAYLIST_ID = "PLAhH93nRSsIOd90xqIVy_swYnSZz6MjX0";
+    private static final String PLAYLIST_TITLE = "Tubing";
 
     public YouTubePlayList(YouTube youTube) {
 
@@ -18,22 +17,28 @@ public class YouTubePlayList extends YouTubeAPI {
     public void update(String videoId) {
 
         try {
-            //String playlistId = insertPlaylist();
-            insertPlaylistItem(PLAYLIST_ID, videoId);
+            insertPlaylistItem(getTubingPlaylist(), videoId);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getTubingPlaylist() throws IOException {
+
+        String playListId = new YouTubeSearch(getYouTube()).searchPlayList(PLAYLIST_TITLE);
+
+        return playListId != null ? playListId : createPlaylist(PLAYLIST_TITLE);
     }
 
     /**
      * This code constructs the playlist resource that is being inserted.
      * It defines the playlist's title, description, and privacy status.
      */
-    private String createPlaylist() throws IOException {
+    private String createPlaylist(String title) throws IOException {
 
         PlaylistSnippet playlistSnippet = new PlaylistSnippet();
-        playlistSnippet.setTitle("Test Playlist " + Calendar.getInstance().getTime());
-        playlistSnippet.setDescription("A private playlist created with the YouTube API v3");
+        playlistSnippet.setTitle(title);
+        playlistSnippet.setDescription("A private playlist created by Tubing App");
         PlaylistStatus playlistStatus = new PlaylistStatus();
         playlistStatus.setPrivacyStatus("private");
 
