@@ -43,6 +43,7 @@ public class HttpClient {
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod(type);
+            System.setProperty("http.keepAlive", "false");
             prepareHttpRequest(connection, headers, data);
             connection.connect();
             ret = retrieveHtmlResponse(connection);
