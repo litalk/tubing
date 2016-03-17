@@ -2,16 +2,26 @@ package com.tubing.dal.redis;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
-import redis.clients.jedis.Jedis;
+import com.tubing.TubingApplicationTests;
 
-public class TestRedis {
-    
+// docker run --name tubing-redis -d -p 6379:6379 redis
+// find ip using ifocnfig
+//@ImportResource("classpath:jedis-app-context.xml")
+@ContextConfiguration(locations = {
+        "classpath:jedis-app-context.xml"})
+public class TestRedis extends TubingApplicationTests {
+
+    @Autowired
+    RedisClient _client;
+
     @Test
-    public void testCreate() {
-        
-        Jedis jedis = new Jedis("172.17.8.51", 32768);
-        jedis.set("foo", "bar");
-        Assert.assertEquals("bar", jedis.get("foo"));
+    public void testSetAndGet() {
+
+        final String VALUE = "bar";
+        _client.set("foo", VALUE);
+        Assert.assertEquals(VALUE, _client.get("foo"));
     }
 }

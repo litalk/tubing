@@ -1,4 +1,4 @@
-package com.tubing.service.QueryProcessor;
+package com.tubing.service;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

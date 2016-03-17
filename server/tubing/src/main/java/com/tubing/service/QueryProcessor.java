@@ -1,4 +1,4 @@
-package com.tubing.service.QueryProcessor;
+package com.tubing.service;
 
 /**
  * Created by kornfeld on 04/11/2015.

@@ -1,4 +1,4 @@
-package com.tubing.service.QueryProcessor;
+package com.tubing.service;
 
 
 import org.apache.commons.lang3.StringUtils;

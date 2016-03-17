@@ -1,4 +1,4 @@
-package com.tubing.service.QueryProcessor;
+package com.tubing.service;
 
 import java.util.HashMap;
 import java.util.Map;
