@@ -14,8 +14,8 @@ import com.google.api.services.youtube.YouTube;
 import com.tubing.logic.google.YouTubeBuilder;
 import com.tubing.logic.google.YouTubePlayList;
 import com.tubing.logic.google.YouTubeSearch;
-import com.tubing.service.QueryProcessor;
-import com.tubing.service.QueryProcessorFactory;
+import com.tubing.logic.processor.QueryProcessor;
+import com.tubing.logic.processor.QueryProcessorFactory;
 
 @RestController
 @RequestMapping("/tubing")
