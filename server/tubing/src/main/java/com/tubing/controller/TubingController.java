@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.api.services.youtube.YouTube;
-import com.tubing.common.ObjectMapperUtils;
-import com.tubing.dal.ElasticService;
-import com.tubing.dal.model.Account;
-import com.tubing.logic.AccountLogic;
 import com.tubing.logic.google.YouTubeBuilder;
 import com.tubing.logic.google.YouTubePlayList;
 import com.tubing.logic.google.YouTubeSearch;
@@ -26,19 +22,9 @@ import com.tubing.service.QueryProcessorFactory;
 public class TubingController {
     
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ResponseEntity<String> login(@RequestBody String jsonAccount) {
+    public ResponseEntity<String> login(@RequestBody String authCode) {
         
         HttpStatus ret = HttpStatus.OK;
-        Account account = ObjectMapperUtils.to(jsonAccount, Account.class);
-        Account search =
-                ElasticService.search(
-                        Account.class,
-                        Account.TYPE,
-                        AccountLogic.getSearchByEmailQuery(account));
-        if (search == null) {
-            ret =
-                    HttpStatus.valueOf(ElasticService.insert(account).getStatusInfo().getStatusCode());
-        }
         
         return new ResponseEntity<>(ret);
     }
