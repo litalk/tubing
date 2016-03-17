@@ -5,11 +5,11 @@ import com.google.api.services.youtube.model.*;
 
 import java.io.IOException;
 
-public class YouTubePlayList extends YouTubeAPI {
+public class YouTubePlaylist extends YouTubeAPI {
 
     private static final String PLAYLIST_TITLE = "Tubing";
 
-    public YouTubePlayList(YouTube youTube) {
+    public YouTubePlaylist(YouTube youTube) {
 
         super(youTube);
     }
