@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.api.services.youtube.YouTube;
 import com.tubing.logic.google.YouTubeBuilder;
-import com.tubing.logic.google.YouTubePlayList;
+import com.tubing.logic.google.YouTubePlaylist;
 import com.tubing.logic.google.YouTubeSearch;
 import com.tubing.service.QueryProcessor;
 import com.tubing.service.QueryProcessorFactory;
@@ -35,7 +35,7 @@ public class TubingController {
         final String youtubeQuery =
                 extractYoutubeQuery("I just used Shazam to discover Llevame Contigo by Romeo Santos. http://shz.am/t54018231");
         YouTube youTube = YouTubeBuilder.build(URLDecoder.decode(authCode, "UTF-8"));
-        new YouTubePlayList(youTube).update(new YouTubeSearch(youTube).searchVideo(youtubeQuery));
+        new YouTubePlaylist(youTube).update(new YouTubeSearch(youTube).searchVideo(youtubeQuery));
     }
     
     private String extractYoutubeQuery(String query) {

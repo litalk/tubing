@@ -1,5 +1,7 @@
 package com.tubing.client.android.http;
 
+import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -49,6 +51,7 @@ public class HttpClient {
             ret = retrieveHtmlResponse(connection);
             updateCookies(ret);
         } catch (Throwable cause) {
+            Log.e(getClass().getSimpleName(), "Failed executing http request", cause);
             throw new RuntimeException(cause);
         }
         

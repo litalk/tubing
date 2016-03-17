@@ -99,7 +99,7 @@ public class ShareActivity extends AppCompatActivity
                             result.getSignInAccount().getServerAuthCode(),
                             null,
                             null).execute(new URL(getString(R.string.tubing_server) + "/tubing/playlist"));
-                } catch (MalformedURLException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
