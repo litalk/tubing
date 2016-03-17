@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class HttpClient {
     
-    private final Map<String, String> _cookies = new HashMap<String, String>();
+    private final Map<String, String> _cookies = new HashMap<>();
 
     public HttpResponse get(
             URL url,

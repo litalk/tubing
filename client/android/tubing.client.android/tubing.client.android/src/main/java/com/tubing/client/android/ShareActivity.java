@@ -98,7 +98,7 @@ public class ShareActivity extends AppCompatActivity
                     new AsyncHttpClientPost(
                             result.getSignInAccount().getServerAuthCode(),
                             null,
-                            null).execute(new URL("http://16.54.190.130:8080/tubing/playlist"));
+                            null).execute(new URL(getString(R.string.tubing_server) + "/tubing/playlist"));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
