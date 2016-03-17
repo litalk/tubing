@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class HttpClient {
     
-    private final Map<String, String> _cookies = new HashMap<String, String>();
+    private final Map<String, String> _cookies = new HashMap<>();
 
     public HttpResponse get(
             URL url,
@@ -43,6 +43,7 @@ public class HttpClient {
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod(type);
+            System.setProperty("http.keepAlive", "false");
             prepareHttpRequest(connection, headers, data);
             connection.connect();
             ret = retrieveHtmlResponse(connection);

@@ -54,8 +54,8 @@ public class ShareActivity extends AppCompatActivity
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail()
                 //.requestIdToken(serverClientId)
                 .requestServerAuthCode(serverClientId).requestScopes(
-                        new Scope("https://www.googleapis.com/auth/youtube")).build();
-                        //new Scope("https://www.googleapis.com/auth/youtube.upload")).build();
+                        new Scope("https://www.googleapis.com/auth/youtube"),
+                        new Scope("https://www.googleapis.com/auth/youtube.upload")).build();
                         // [END configure_signin]
                         
         // Build GoogleAPIClient with the Google Sign-In API and the above options.
@@ -98,7 +98,7 @@ public class ShareActivity extends AppCompatActivity
                     new AsyncHttpClientPost(
                             result.getSignInAccount().getServerAuthCode(),
                             null,
-                            null).execute(new URL("http://192.168.56.1:8080/tubing/playlist"));
+                            null).execute(new URL(getString(R.string.tubing_server) + "/tubing/playlist"));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }

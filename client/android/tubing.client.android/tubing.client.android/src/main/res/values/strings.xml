@@ -38,4 +38,6 @@
          from https://console.developers.google.com/ -->
     <string name="server_client_id">470859838725-ghrbl1kg0ttueqdosoodf06fohfjlbhr.apps.googleusercontent.com</string>
 
+    <string name="tubing_server">http://16.54.190.130:8080</string>
+
 </resources>
