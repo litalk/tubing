@@ -88,11 +88,11 @@ public class ShareActivity extends AppCompatActivity
         if (requestCode == RC_GET_AUTH_CODE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             Log.d(TAG, "onActivityResult:GET_AUTH_CODE:status:" + result.getStatus());
-            Log.d(
-                    TAG,
-                    "onActivityResult:GET_AUTH_CODE:account:"
-                         + result.getSignInAccount().getDisplayName());
             if (result.isSuccess()) {
+                Log.d(
+                        TAG,
+                        "onActivityResult:GET_AUTH_CODE:account:"
+                                + result.getSignInAccount().getDisplayName());
                 // Send code to server and exchange for access/refresh/ID tokens.
                 try {
                     new AsyncHttpClientPost(
