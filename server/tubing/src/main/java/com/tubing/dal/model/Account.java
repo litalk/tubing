@@ -1,47 +1,39 @@
 package com.tubing.dal.model;
 
-public class Account {
+public class Account implements Entity {
     
     public static final String TYPE = "account";
-    public static final String EMAIL_FIELD = "_email";
-    
-    private String _email;
-    private String _username;
+
+    private String _userId;
     private String _token;
-    
+
     private Account() {}
     
-    public Account(String email, String username, String token) {
+    public Account(String userId, String token) {
         
-        this();
-        _email = email;
-        _username = username;
+        _userId = userId;
         _token = token;
     }
     
-    public String getEmail() {
+    public String getUserId() {
         
-        return _email;
-    }
-    
-    public String getUsername() {
-        
-        return _username;
+        return _userId;
     }
     
     public String getToken() {
         
         return _token;
     }
+
+    @Override
+    public String getUniqueId() {
+
+        return String.format("%s:%s", TYPE, _userId);
+    }
     
     @Override
     public String toString() {
         
-        return String.format("email: %s, username: %s, token: %s", _email, _username, _token);
-    }
-    
-    public String getType() {
-        
-        return TYPE;
+        return String.format("userId: %s, token: %s", _userId, _token);
     }
 }

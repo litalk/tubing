@@ -1,40 +1,26 @@
 package com.tubing.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.google.api.services.youtube.YouTube;
 import com.tubing.logic.google.YouTubeBuilder;
 import com.tubing.logic.google.YouTubePlaylist;
 import com.tubing.logic.google.YouTubeSearch;
 import com.tubing.logic.processor.QueryProcessor;
 import com.tubing.logic.processor.QueryProcessorFactory;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 @RestController
 @RequestMapping("/tubing")
 public class TubingController {
     
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ResponseEntity<String> login(@RequestBody String authCode) {
-        
-        HttpStatus ret = HttpStatus.OK;
-        
-        return new ResponseEntity<>(ret);
-    }
-    
     @RequestMapping(value = "playlist", method = RequestMethod.POST)
-    public void addToPlayList(@RequestBody String authCode) throws UnsupportedEncodingException {
-        
+    public void addToPlayList(@CookieValue("tubing_user-id") String userId, @CookieValue("tubing_auth-code") String authCode, @RequestBody String query) throws UnsupportedEncodingException {
+
         final String youtubeQuery =
-                extractYoutubeQuery("I just used Shazam to discover Llevame Contigo by Romeo Santos. http://shz.am/t54018231");
-        YouTube youTube = YouTubeBuilder.build(URLDecoder.decode(authCode, "UTF-8"));
+                extractYoutubeQuery(query);
+        YouTube youTube = YouTubeBuilder.build(userId, URLDecoder.decode(authCode, "UTF-8"));
         new YouTubePlaylist(youTube).update(new YouTubeSearch(youTube).searchVideo(youtubeQuery));
     }
     

@@ -1,13 +1,9 @@
 package com.tubing.client.android;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -15,6 +11,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.tubing.client.android.http.AsyncHttpClientPost;
+
+import java.net.URL;
 
 /**
  * Created by kornfeld on 17/12/2015.
@@ -26,6 +24,7 @@ public class ShareActivity extends AppCompatActivity
     private static final int RC_GET_AUTH_CODE = 9003;
     
     private GoogleApiClient mGoogleApiClient;
+    private String mQuery;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,9 +34,7 @@ public class ShareActivity extends AppCompatActivity
         
         // Get intent, action and MIME type
         Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-        final String stringExtra = intent.getStringExtra(Intent.EXTRA_TEXT);
+        mQuery = intent.getStringExtra(Intent.EXTRA_TEXT);
         
         initGoogleAPI();
         getAuthCode();
@@ -96,7 +93,7 @@ public class ShareActivity extends AppCompatActivity
                 // Send code to server and exchange for access/refresh/ID tokens.
                 try {
                     new AsyncHttpClientPost(
-                            result.getSignInAccount().getServerAuthCode(),
+                            mQuery,
                             null,
                             null).execute(new URL(getString(R.string.tubing_server) + "/tubing/playlist"));
                 } catch (Exception e) {

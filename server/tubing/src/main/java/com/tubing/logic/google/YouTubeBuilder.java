@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 
 public class YouTubeBuilder {
 
-    public static YouTube build(String authCode) {
+    public static YouTube build(String userId, String authCode) {
 
         YouTube ret;
         NetHttpTransport transport = new NetHttpTransport();

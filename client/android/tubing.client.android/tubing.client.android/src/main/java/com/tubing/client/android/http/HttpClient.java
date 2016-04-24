@@ -45,7 +45,6 @@ public class HttpClient {
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod(type);
-            System.setProperty("http.keepAlive", "false");
             prepareHttpRequest(connection, headers, data);
             connection.connect();
             ret = retrieveHtmlResponse(connection);
@@ -166,10 +165,10 @@ public class HttpClient {
 
     private interface Constants {
 
-        static final String GET = "GET";
-        static final String POST = "POST";
-        static final String PUT = "PUT";
-        static final String COOKIE = "Cookie";
-        static final String SET_COOKIE = "Set-Cookie";
+        String GET = "GET";
+        String POST = "POST";
+        String PUT = "PUT";
+        String COOKIE = "Cookie";
+        String SET_COOKIE = "Set-Cookie";
     }
 }

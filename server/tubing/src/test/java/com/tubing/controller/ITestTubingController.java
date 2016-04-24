@@ -63,6 +63,6 @@ public class ITestTubingController extends TubingApplicationTests {
     public String getUserJson() {
         
         return ObjectMapperUtils.from(
-                new Account("grover@gmail.com", "Krovi Sumsum", "470859838725a3b"));
+                new Account("Krovi Sumsum", "470859838725a3b"));
     }
 }
