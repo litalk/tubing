@@ -34,4 +34,9 @@ public class RedisClient implements DALClient {
 
         return _jedis.hgetAll(key);
     }
+
+    public boolean delete(String key) {
+
+        return _jedis.del(key) == 1;
+    }
 }

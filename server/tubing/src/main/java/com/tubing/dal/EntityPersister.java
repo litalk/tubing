@@ -19,8 +19,12 @@ public class EntityPersister {
 
     public void insert(Entity entity) {
 
-        Map<String, String> fields = getFields(entity);
-        _client.hmset(entity.getUniqueId(), fields);
+        _client.hmset(entity.getUniqueId(), getFields(entity));
+    }
+
+    public boolean delete(String key) {
+
+        return _client.delete(key);
     }
 
     private Map<String, String> getFields(Entity entity) {
