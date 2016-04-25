@@ -2,8 +2,10 @@ package com.tubing;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
+@ImportResource("*-context.xml")
 public class TubingApplication {
     
     public static void main(String[] args) {
