@@ -20,7 +20,8 @@ public class EntityFetcher {
     public <TEntity extends Entity> TEntity get(String uniqueId, Class<TEntity> entityType) {
 
         Map<String, String> fields = _client.hgetAll(uniqueId);
-        
-        return ObjectMapperUtils.to(ObjectMapperUtils.from(fields), entityType);
+
+        return fields.isEmpty() ? null :
+                ObjectMapperUtils.to(ObjectMapperUtils.from(fields), entityType);
     }
 }
