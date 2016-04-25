@@ -1,10 +1,10 @@
 package com.tubing.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,11 +21,14 @@ import com.tubing.logic.processor.QueryProcessorFactory;
 @RequestMapping("/tubing/api")
 public class TubingController {
 
+    @Autowired
+    private YouTubeBuilder _builder;
+
     @RequestMapping(value = "playlist", method = RequestMethod.POST)
     public void playlist(HttpServletRequest request, @RequestBody String query) throws UnsupportedEncodingException {
 
         String userId = (String) request.getAttribute("user-id");
-        YouTube youTube = YouTubeBuilder.build(userId, URLDecoder.decode("", "UTF-8"));
+        YouTube youTube = _builder.build(userId);
         final String youtubeQuery = extractYoutubeQuery(query);
         new YouTubePlaylist(youTube).update(new YouTubeSearch(youTube).searchVideo(youtubeQuery));
     }

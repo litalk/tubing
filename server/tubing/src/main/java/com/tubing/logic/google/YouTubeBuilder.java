@@ -1,7 +1,5 @@
 package com.tubing.logic.google;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +18,7 @@ public class YouTubeBuilder {
     @Autowired
     private EntityFetcher _fetcher;
 
-    public YouTube build(String userId) throws IOException {
+    public YouTube build(String userId) {
 
         NetHttpTransport transport = new NetHttpTransport();
         JacksonFactory jsonFactory = JacksonFactory.getDefaultInstance();
