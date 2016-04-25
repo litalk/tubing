@@ -3,8 +3,8 @@ package com.tubing.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,23 +18,15 @@ import com.tubing.logic.processor.QueryProcessor;
 import com.tubing.logic.processor.QueryProcessorFactory;
 
 @RestController
-@RequestMapping("/tubing")
+@RequestMapping("/tubing/api")
 public class TubingController {
-    
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ResponseEntity<String> login(@RequestBody String authCode) {
-        
-        HttpStatus ret = HttpStatus.OK;
-        
-        return new ResponseEntity<>(ret);
-    }
-    
+
     @RequestMapping(value = "playlist", method = RequestMethod.POST)
-    public void addToPlayList(@RequestBody String authCode) throws UnsupportedEncodingException {
-        
-        final String youtubeQuery =
-                extractYoutubeQuery("I just used Shazam to discover Llevame Contigo by Romeo Santos. http://shz.am/t54018231");
-        YouTube youTube = YouTubeBuilder.build(URLDecoder.decode(authCode, "UTF-8"));
+    public void playlist(HttpServletRequest request, @RequestBody String query) throws UnsupportedEncodingException {
+
+        String userId = (String) request.getAttribute("user-id");
+        YouTube youTube = YouTubeBuilder.build(userId, URLDecoder.decode("", "UTF-8"));
+        final String youtubeQuery = extractYoutubeQuery(query);
         new YouTubePlaylist(youTube).update(new YouTubeSearch(youTube).searchVideo(youtubeQuery));
     }
     

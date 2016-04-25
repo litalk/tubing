@@ -18,17 +18,19 @@ public class HttpClient {
     public HttpResponse get(
             URL url,
             String queryString,
-            Map<String, String> headers) {
+            Map<String, String> headers,
+            Map<String, String> cookies) {
 
-        return doHttp(Constants.GET, url.toString(), queryString, null, headers);
+        return doHttp(Constants.GET, url.toString(), queryString, null, headers, cookies);
     }
     
     public HttpResponse post(
             URL url,
             byte[] data,
-            Map<String, String> headers) {
+            Map<String, String> headers,
+            Map<String, String> cookies) {
 
-        return doHttp(Constants.POST, url.toString(), null, data, headers);
+        return doHttp(Constants.POST, url.toString(), null, data, headers, cookies);
     }
 
     private HttpResponse doHttp(
@@ -36,16 +38,19 @@ public class HttpClient {
             String url,
             String queryString,
             byte[] data,
-            Map<String, String> headers) {
+            Map<String, String> headers,
+            Map<String, String> cookies) {
 
         HttpResponse ret = null;
-        if (queryString != null && !"".equals(queryString)) {
+        if (queryString != null && !queryString.isEmpty()) {
             url += "?" + queryString;
         }
         try {
+            if (cookies != null) {
+                _cookies.putAll(cookies);
+            }
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod(type);
-            System.setProperty("http.keepAlive", "false");
             prepareHttpRequest(connection, headers, data);
             connection.connect();
             ret = retrieveHtmlResponse(connection);
@@ -166,10 +171,10 @@ public class HttpClient {
 
     private interface Constants {
 
-        static final String GET = "GET";
-        static final String POST = "POST";
-        static final String PUT = "PUT";
-        static final String COOKIE = "Cookie";
-        static final String SET_COOKIE = "Set-Cookie";
+        String GET = "GET";
+        String POST = "POST";
+        String PUT = "PUT";
+        String COOKIE = "Cookie";
+        String SET_COOKIE = "Set-Cookie";
     }
 }
