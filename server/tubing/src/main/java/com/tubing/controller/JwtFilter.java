@@ -11,33 +11,53 @@ import javax.servlet.http.HttpServletRequest;
 import org.mortbay.jetty.HttpHeaders;
 import org.springframework.web.filter.GenericFilterBean;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureException;
+import com.tubing.dal.EntityFetcher;
+import com.tubing.dal.model.Session;
+import com.tubing.logic.UIDGenerator;
 
 public class JwtFilter extends GenericFilterBean {
+    
+    private EntityFetcher _fetcher;
 
+    public JwtFilter(EntityFetcher fetcher) {
+        
+        _fetcher = fetcher;
+    }
+    
     @Override
-    public void doFilter(final ServletRequest req,
-                         final ServletResponse res,
-                         final FilterChain chain) throws IOException, ServletException {
-
-        final HttpServletRequest request = (HttpServletRequest) req;
+    public void doFilter(
+            final ServletRequest req,
+            final ServletResponse res,
+            final FilterChain chain) throws IOException, ServletException {
+            
+        try {
+            final HttpServletRequest request = (HttpServletRequest) req;
+            request.setAttribute("user-id", getUserId(getToken(request)));
+        } catch (final Exception ex) {
+            throw new ServletException("Invalid token.");
+        }
+        
+        chain.doFilter(req, res);
+    }
+    
+    private String getToken(HttpServletRequest request) throws ServletException {
+        
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new ServletException("Missing or invalid Authorization header.");
         }
-        // The part after "Bearer "
-        final String token = authHeader.substring("Bearer ".length());
-        try {
-            final Claims claims = Jwts.parser().setSigningKey("secretkey")
-                    .parseClaimsJws(token).getBody();
-            request.setAttribute("user-id", claims.getSubject());
-        }
-        catch (final SignatureException e) {
+        
+        return authHeader.substring("Bearer ".length());
+    }
+
+    private String getUserId(String token) throws ServletException {
+        
+        String key = UIDGenerator.generate(Session.TYPE, JwtHelper.getSession(token));
+        Session session = _fetcher.get(key, Session.class);
+        if (session == null) {
             throw new ServletException("Invalid token.");
         }
-
-        chain.doFilter(req, res);
+        
+        return session.getUserId();
     }
 }

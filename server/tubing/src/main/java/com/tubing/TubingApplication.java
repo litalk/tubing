@@ -1,5 +1,7 @@
 package com.tubing;
 
+import com.tubing.dal.EntityFetcher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
@@ -13,12 +15,14 @@ import com.tubing.controller.JwtFilter;
 public class TubingApplication {
 
     public static String NAME = "Tubing";
+    @Autowired
+    private EntityFetcher _fetcher;
 
     @Bean
     public FilterRegistrationBean jwtFilter() {
 
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(new JwtFilter());
+        registrationBean.setFilter(new JwtFilter(_fetcher));
         registrationBean.addUrlPatterns("/tubing/api/*");
 
         return registrationBean;

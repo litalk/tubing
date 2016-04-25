@@ -11,26 +11,25 @@ import com.tubing.dal.EntityFetcher;
 import com.tubing.dal.EntityPersister;
 import com.tubing.dal.model.Account;
 
-@ContextConfiguration(locations = {
-        "classpath:jedis-app-context.xml"})
+@ContextConfiguration(locations = { "classpath:jedis-app-context.xml" })
 public class TestEntityCRUD extends TubingApplicationTests {
-
+    
     @Autowired
     private EntityPersister _persister;
     @Autowired
     private EntityFetcher _fetcher;
-
+    
     private Account _account = AccountUtils.create();
-
+    
     @After
     public void cleanup() {
-
+        
         _persister.delete(_account.getUniqueId());
     }
-
+    
     @Test
     public void testInsertAndGet() {
-
+        
         System.out.println("Persisting account: " + _account);
         _persister.insert(_account);
         Account fetchedAccount = _fetcher.get(_account.getUniqueId(), Account.class);
@@ -38,10 +37,10 @@ public class TestEntityCRUD extends TubingApplicationTests {
         Assert.assertEquals(_account.getRefreshToken(), fetchedAccount.getRefreshToken());
         Assert.assertEquals(_account.getUserId(), fetchedAccount.getUserId());
     }
-
+    
     @Test
     public void testEntityDoesNotExist() {
-
+        
         Account fetchedAccount = _fetcher.get("non-exist-entity", Account.class);
         Assert.assertEquals(null, fetchedAccount);
     }

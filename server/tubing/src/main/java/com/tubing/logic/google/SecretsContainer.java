@@ -10,7 +10,7 @@ public class SecretsContainer {
 
     private static GoogleClientSecrets _secrets;
 
-    public static GoogleClientSecrets get() {
+    public synchronized static GoogleClientSecrets get() {
 
         if (_secrets == null) {
             try {
@@ -21,5 +21,10 @@ public class SecretsContainer {
         }
 
         return _secrets;
+    }
+
+    public static String getJwt() {
+
+        return get().getDetails().getClientSecret();
     }
 }

@@ -59,6 +59,11 @@ public class Account implements Entity {
         return _userId;
     }
 
+    public String getName() {
+
+        return _name;
+    }
+
     @Override
     public String getUniqueId() {
 
