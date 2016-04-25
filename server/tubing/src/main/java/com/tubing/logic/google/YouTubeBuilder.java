@@ -1,16 +1,18 @@
 package com.tubing.logic.google;
 
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
+
+import org.json.JSONObject;
+
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
+import com.tubing.TubingApplication;
 import com.tubing.rest.RestClientImpl;
 import com.tubing.rest.RestClientResponse;
 import com.tubing.rest.RestRequest;
-import org.json.JSONObject;
-
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.MediaType;
 
 public class YouTubeBuilder {
 
@@ -107,7 +109,7 @@ public class YouTubeBuilder {
         GoogleCredential credential = new GoogleCredential().setAccessToken(getAccessToken(authCode));
 
         return new YouTube.Builder(transport, jsonFactory, credential).
-                setApplicationName("Tubing").
+                setApplicationName(TubingApplication.NAME).
                 build();
     }
 }

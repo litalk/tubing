@@ -132,6 +132,13 @@
             <version>1.9.2</version>
         </dependency>
 
+        <!--JWT - JSON Web Token-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.6.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

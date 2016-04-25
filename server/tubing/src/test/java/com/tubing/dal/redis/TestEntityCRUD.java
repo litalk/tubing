@@ -1,18 +1,16 @@
 package com.tubing.dal.redis;
 
-import com.tubing.TubingApplicationTests;
-import com.tubing.dal.EntityFetcher;
-import com.tubing.dal.EntityPersister;
-import com.tubing.dal.model.Account;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-/**
- * Created by kornfeld on 24/04/2016.
- */
+import com.tubing.TubingApplicationTests;
+import com.tubing.dal.EntityFetcher;
+import com.tubing.dal.EntityPersister;
+import com.tubing.dal.model.Account;
+
 @ContextConfiguration(locations = {
         "classpath:jedis-app-context.xml"})
 public class TestEntityCRUD extends TubingApplicationTests {
@@ -22,7 +20,7 @@ public class TestEntityCRUD extends TubingApplicationTests {
     @Autowired
     private EntityFetcher _fetcher;
 
-    private Account _account = new Account("lital", "auth-code-123");
+    private Account _account = AccountUtils.create();
 
     @After
     public void cleanup() {
@@ -36,7 +34,8 @@ public class TestEntityCRUD extends TubingApplicationTests {
         System.out.println("Persisting account: " + _account);
         _persister.insert(_account);
         Account fetchedAccount = _fetcher.get(_account.getUniqueId(), Account.class);
-        Assert.assertEquals(_account.getUserIdToken(), fetchedAccount.getUserIdToken());
-        Assert.assertEquals(_account.getAuthCode(), fetchedAccount.getAuthCode());
+        Assert.assertEquals(_account.getAccessToken(), fetchedAccount.getAccessToken());
+        Assert.assertEquals(_account.getRefreshToken(), fetchedAccount.getRefreshToken());
+        Assert.assertEquals(_account.getUserId(), fetchedAccount.getUserId());
     }
 }
