@@ -18,17 +18,19 @@ public class HttpClient {
     public HttpResponse get(
             URL url,
             String queryString,
-            Map<String, String> headers) {
+            Map<String, String> headers,
+            Map<String, String> cookies) {
 
-        return doHttp(Constants.GET, url.toString(), queryString, null, headers);
+        return doHttp(Constants.GET, url.toString(), queryString, null, headers, cookies);
     }
     
     public HttpResponse post(
             URL url,
             byte[] data,
-            Map<String, String> headers) {
+            Map<String, String> headers,
+            Map<String, String> cookies) {
 
-        return doHttp(Constants.POST, url.toString(), null, data, headers);
+        return doHttp(Constants.POST, url.toString(), null, data, headers, cookies);
     }
 
     private HttpResponse doHttp(
@@ -36,13 +38,17 @@ public class HttpClient {
             String url,
             String queryString,
             byte[] data,
-            Map<String, String> headers) {
+            Map<String, String> headers,
+            Map<String, String> cookies) {
 
         HttpResponse ret = null;
-        if (queryString != null && !"".equals(queryString)) {
+        if (queryString != null && !queryString.isEmpty()) {
             url += "?" + queryString;
         }
         try {
+            if (cookies != null) {
+                _cookies.putAll(cookies);
+            }
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod(type);
             prepareHttpRequest(connection, headers, data);
