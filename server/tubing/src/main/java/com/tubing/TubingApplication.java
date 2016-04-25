@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ImportResource;
 import com.tubing.controller.JwtFilter;
 
 @SpringBootApplication
-@ImportResource("*-context.xml")
+@ImportResource("classpath:*-context.xml")
 public class TubingApplication {
 
     public static String NAME = "Tubing";

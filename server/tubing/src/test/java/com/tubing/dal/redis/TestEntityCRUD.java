@@ -25,7 +25,7 @@ public class TestEntityCRUD extends TubingApplicationTests {
     @After
     public void cleanup() {
 
-        Assert.assertTrue(_persister.delete(_account.getUniqueId()));
+        _persister.delete(_account.getUniqueId());
     }
 
     @Test
@@ -37,5 +37,12 @@ public class TestEntityCRUD extends TubingApplicationTests {
         Assert.assertEquals(_account.getAccessToken(), fetchedAccount.getAccessToken());
         Assert.assertEquals(_account.getRefreshToken(), fetchedAccount.getRefreshToken());
         Assert.assertEquals(_account.getUserId(), fetchedAccount.getUserId());
+    }
+
+    @Test
+    public void testEntityDoesNotExist() {
+
+        Account fetchedAccount = _fetcher.get("non-exist-entity", Account.class);
+        Assert.assertEquals(null, fetchedAccount);
     }
 }
