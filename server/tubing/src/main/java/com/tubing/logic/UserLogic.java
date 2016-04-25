@@ -17,6 +17,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.tubing.dal.EntityPersister;
 import com.tubing.dal.model.Account;
+import com.tubing.logic.google.SecretsContainer;
 import com.tubing.rest.RestClientImpl;
 import com.tubing.rest.RestClientResponse;
 import com.tubing.rest.RestRequest;
@@ -24,7 +25,6 @@ import com.tubing.rest.RestRequest;
 @Component
 public class UserLogic {
 
-    private static String CLIENT_ID = "470859838725-ghrbl1kg0ttueqdosoodf06fohfjlbhr.apps.googleusercontent.com";
     @Autowired
     private EntityPersister _persister;
 
@@ -70,8 +70,8 @@ public class UserLogic {
         try {
             final Form form = new Form();
             form.param("code", authCode);
-            form.param("client_id", CLIENT_ID);
-            form.param("client_secret", "1zeE1eG9bsIfD8xYYfabEPIC");
+            form.param("client_id", SecretsContainer.get().getDetails().getClientId());
+            form.param("client_secret", SecretsContainer.get().getDetails().getClientSecret());
             form.param("redirect_uri", "");
             form.param("grant_type", "authorization_code");
             RestRequest request = new RestRequest("https://accounts.google.com/o/oauth2/token", form, MediaType.APPLICATION_FORM_URLENCODED);
@@ -88,17 +88,16 @@ public class UserLogic {
 
     private static GoogleIdToken validateAccessToken(String idToken) throws GeneralSecurityException, IOException {
 
-        GoogleIdToken ret = null;
         JacksonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), jsonFactory)
-                .setAudience(Arrays.asList(CLIENT_ID))
+                .setAudience(Arrays.asList(SecretsContainer.get().getDetails().getClientId()))
                 // If you retrieved the token on Android using the Play Services 8.3 API or newer, set
                 // the issuer to "https://accounts.google.com". Otherwise, set the issuer to
                 // "accounts.google.com". If you need to verify tokens from multiple sources, build
                 // a GoogleIdTokenVerifier for each issuer and try them both.
                 .setIssuer("https://accounts.google.com")
                 .build();
-        ret = verifier.verify(idToken);
+        GoogleIdToken ret = verifier.verify(idToken);
         if (ret == null) {
             throw new RuntimeException("Token cannot be parsed");
         }
