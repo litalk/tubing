@@ -66,7 +66,7 @@ public class Account implements Entity {
 
     @Override
     public String getUniqueId() {
-
+        
         return UIDGenerator.generate(Account.TYPE, getUserId());
     }
     

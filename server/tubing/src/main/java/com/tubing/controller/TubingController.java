@@ -20,13 +20,14 @@ import com.tubing.logic.processor.QueryProcessorFactory;
 @RestController
 @RequestMapping("/tubing/api")
 public class TubingController {
-
+    
     @Autowired
     private YouTubeBuilder _builder;
-
+    
     @RequestMapping(value = "playlist", method = RequestMethod.POST)
-    public void playlist(HttpServletRequest request, @RequestBody String query) throws UnsupportedEncodingException {
-
+    public void playlist(HttpServletRequest request, @RequestBody String query)
+            throws UnsupportedEncodingException {
+            
         String userId = (String) request.getAttribute("user-id");
         YouTube youTube = _builder.build(userId);
         final String youtubeQuery = extractYoutubeQuery(query);

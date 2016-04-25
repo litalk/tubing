@@ -8,7 +8,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.mortbay.jetty.HttpHeaders;
 import org.springframework.web.filter.GenericFilterBean;
 
 import com.tubing.dal.EntityFetcher;
@@ -32,30 +31,20 @@ public class JwtFilter extends GenericFilterBean {
             
         try {
             final HttpServletRequest request = (HttpServletRequest) req;
-            request.setAttribute("user-id", getUserId(getToken(request)));
+            request.setAttribute("user-id", getUserId(JwtHelper.getToken(request)));
         } catch (final Exception ex) {
             throw new ServletException("Invalid token.");
         }
         
         chain.doFilter(req, res);
     }
-    
-    private String getToken(HttpServletRequest request) throws ServletException {
-        
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new ServletException("Missing or invalid Authorization header.");
-        }
-        
-        return authHeader.substring("Bearer ".length());
-    }
 
-    private String getUserId(String token) throws ServletException {
+    private String getUserId(String token) {
         
         String key = UIDGenerator.generate(Session.TYPE, JwtHelper.getSession(token));
         Session session = _fetcher.get(key, Session.class);
         if (session == null) {
-            throw new ServletException("Invalid token.");
+            throw new RuntimeException("Session not found in DB (should login again).");
         }
         
         return session.getUserId();
