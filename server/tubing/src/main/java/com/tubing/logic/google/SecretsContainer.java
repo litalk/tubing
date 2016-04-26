@@ -14,7 +14,7 @@ public class SecretsContainer {
 
         if (_secrets == null) {
             try {
-                _secrets = GoogleClientSecrets.load(JacksonFactory.getDefaultInstance(), new FileReader("client_secret_windy.json"));
+                _secrets = GoogleClientSecrets.load(JacksonFactory.getDefaultInstance(), new FileReader("src/main/resources/windy.json"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
