@@ -1,0 +1,25 @@
+{
+  "generator-m-ionic": {
+    "answers": {
+      "appName": "Tubing",
+      "appId": "com.tubing.client.angular",
+      "ionicCss": false,
+      "bowerPackages": [
+        "angular-dynamic-locale#~0.1.27",
+        "angular-translate#~2.10.0",
+        "angular-translate-loader-static-files#~2.10.0",
+        "localforage#~1.4.0"
+      ],
+      "platforms": [
+        "android"
+      ],
+      "plugins": [
+        "cordova-plugin-device",
+        "cordova-plugin-dialogs",
+        "cordova-plugin-network-information"
+      ],
+      "appModule": "Tubing",
+      "ecosystems": []
+    }
+  }
+}
