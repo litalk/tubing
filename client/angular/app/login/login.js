@@ -2,6 +2,7 @@
 angular.module('login', [
     'ionic',
     'ngCordova',
+    'ngCordovaOauth',
     'ui.router'
     // TODO: load other modules selected during generation
   ])

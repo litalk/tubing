@@ -19,14 +19,14 @@ angular.module('login')
         $log.info(self.device, ionic.Platform.platform());
 
         $cordovaOauth.google(Config.CLIENT_ID, ['https://www.googleapis.com/auth/youtube']).then(function (res) {
-          $log.log(res);
+          $log.info(res);
         }, function (err) {
-          $log.log(err);
+          $log.info(err);
         });
       }
     };
 
-    function init () {
+    function init() {
       self.methods = methods;
     }
 
