@@ -8,6 +8,7 @@ import java.util.Arrays;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 
+import com.tubing.common.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,10 +34,12 @@ public class UserLogic {
         
         Account ret = null;
         try {
-            TokenContainer token = getToken(authCode);
-            GoogleIdToken idToken = validateAccessToken(token.getAccessToken());
-            if (idToken != null) {
-                ret = updateAccount(token, idToken);
+            if(!StringUtils.isNullOrEmpty(authCode)) {
+                TokenContainer token = getToken(authCode);
+                GoogleIdToken idToken = validateAccessToken(token.getAccessToken());
+                if (idToken != null) {
+                    ret = updateAccount(token, idToken);
+                }
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
