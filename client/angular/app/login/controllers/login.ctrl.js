@@ -16,12 +16,49 @@ angular.module('login')
 
     var methods = {
       getDeviceType: function () {
-        $log.info(self.device, ionic.Platform.platform());
+        methods.doGoogleSignIn();
+        //$log.info(self.device, ionic.Platform.platform());
+        //
+        //$cordovaOauth.google(Config.CLIENT_ID, ['https://www.googleapis.com/auth/youtube'], {access_type: "offline"}).then(function (res) {
+        //  $log.info(res);
+        //
+        //  $http.post(Config.ENV.SERVER_URL + '/login', {token: res.access_token}).then(function (res) {
+        //    $log.info(res);
+        //  });
+        //}, function (err) {
+        //  $log.info(err);
+        //});
+      },
+      doGoogleSignIn: function () {
+        var auth_url = 'response_type=code&redirect_uri=' + encodeURIComponent('http://localhost/callback') + '&client_id=' + Config.CLIENT_ID + '&access_type=offline&scope=' + encodeURIComponent('https://www.googleapis.com/auth/youtube');
+        var encoded_url = 'https://accounts.google.com/o/oauth2/v2/auth?' + auth_url;
 
-        $cordovaOauth.google(Config.CLIENT_ID, ['https://www.googleapis.com/auth/youtube']).then(function (res) {
-          $log.info(res);
-        }, function (err) {
-          $log.info(err);
+        var browserRef = window.cordova.InAppBrowser.open(encoded_url, '_blank', 'location=no');
+
+        browserRef.addEventListener("loadstart", function (event) {
+          if ((event.url).indexOf('http://localhost/callback') === 0) {
+            var requestToken = (event.url).split("code=")[1];
+            $log.info(requestToken);
+
+            var config = {
+              method: 'POST',
+              url: Config.ENV.SERVER_URL + '/login',
+              data: {
+                auth_code: requestToken
+              },
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            };
+
+            $http(config)
+              .then(function (res) {
+                $log.info(res);
+              }, function (err) {
+                $log.info(err);
+              });
+
+          }
         });
       }
     };
@@ -31,38 +68,5 @@ angular.module('login')
     }
 
     init();
-    // PASSWORD EXAMPLE
-    //this.password = {
-    //  input: '', // by user
-    //  strength: ''
-    //};
-    //this.grade = function () {
-    //  var size = this.password.input.length;
-    //  if (size > 8) {
-    //    this.password.strength = 'strong';
-    //  } else if (size > 3) {
-    //    this.password.strength = 'medium';
-    //  } else {
-    //    this.password.strength = 'weak';
-    //  }
-    //};
-    //this.grade();
-    //
-    //// Proxy
-    //this.proxyState = 'ready';
-    //this.proxyRequestUrl = Config.ENV.SOME_OTHER_URL + '/get';
-    //
-    //this.proxyTest = function () {
-    //  this.proxyState = '...';
-    //
-    //  $http.get(this.proxyRequestUrl)
-    //    .then(function (response) {
-    //      $log.log(response);
-    //      this.proxyState = 'success (result printed to browser console)';
-    //    }.bind(this))
-    //    .then($timeout(function () {
-    //      this.proxyState = 'ready';
-    //    }.bind(this), 6000));
-    //};
 
   });

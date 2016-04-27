@@ -12,10 +12,12 @@
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
+  <allow-intent href="file://*/*"/>
   <allow-intent href="tel:*"/>
   <allow-intent href="sms:*"/>
   <allow-intent href="mailto:*"/>
   <allow-intent href="geo:*"/>
+  <allow-navigation href="*"/>
   <platform name="android">
     <allow-intent href="market:*"/>
   </platform>

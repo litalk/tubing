@@ -6,7 +6,7 @@ angular.module('login')
     // gulp environment: injects environment vars
     ENV: {
       /*inject-env*/
-      'SERVER_URL': 'https://DEVSERVER/api',
+      'SERVER_URL': 'http://BARSHEAN3.emea.hpqcorp.net:8080/tubing',
       'SOME_OTHER_URL': '/proxy'
       /*endinject*/
     },
