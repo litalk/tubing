@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +28,12 @@ public class UserController {
     @Autowired
     private EntityPersister _persister;
     
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RequestMapping(value = "login", method = RequestMethod.POST, headers = "Accept=application/json")
     public LoginResponse login(@RequestBody final String authCode) throws ServletException {
         
         Account account = null;
         try {
-            account = _logic.login(authCode);
+            account = _logic.login(getAuthCode(authCode));
         } catch (Exception ex) {
             account = null;
         }
@@ -43,6 +44,19 @@ public class UserController {
         _persister.insert(new Session(sessionKey, account.getUserId()));
         
         return new LoginResponse(JwtHelper.build(account.getName(), sessionKey));
+    }
+    
+    private static String getAuthCode(@RequestBody String json) throws ServletException {
+        
+        String ret;
+        try {
+            ret = new JSONObject(json).getString("auth_code");
+        } catch (Exception ex) {
+            throw new ServletException(
+                    "Invalid body, should look like {auth_code: <authorization code>}");
+        }
+        
+        return ret;
     }
     
     @RequestMapping(value = "logout", method = RequestMethod.POST)
