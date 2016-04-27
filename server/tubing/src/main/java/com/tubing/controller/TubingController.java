@@ -4,6 +4,9 @@ import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.tubing.dal.EntityFetcher;
+import com.tubing.dal.model.Session;
+import com.tubing.logic.UIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +23,14 @@ public class TubingController {
     
     @Autowired
     private YouTubeBuilder _builder;
+    @Autowired
+    private EntityFetcher _fetcher;
 
     @RequestMapping(value = "playlist/{playlist-id}/items", method = RequestMethod.POST)
     public void playlist(HttpServletRequest request, @PathVariable("playlist-id") String playlistId, @RequestBody String query)
             throws UnsupportedEncodingException {
             
-        String userId = (String) request.getAttribute("user-id");
-        YouTube youTube = _builder.build(userId);
+        YouTube youTube = _builder.build(getUserId(request));
         final String youtubeQuery = extractYoutubeQuery(query);
         new YouTubePlaylist(youTube).update(playlistId, new YouTubeSearch(youTube).searchVideo(youtubeQuery));
     }
@@ -36,5 +40,16 @@ public class TubingController {
         final QueryProcessor queryProcessor = QueryProcessorFactory.get(query);
         
         return queryProcessor.process(query);
+    }
+
+    private String getUserId(HttpServletRequest request) {
+
+        String key = UIDGenerator.generate(Session.TYPE, (String) request.getAttribute("session-id"));
+        Session session = _fetcher.get(key, Session.class);
+        if (session == null) {
+            throw new RuntimeException("Session not found, please login again.");
+        }
+
+        return session.getUserId();
     }
 }

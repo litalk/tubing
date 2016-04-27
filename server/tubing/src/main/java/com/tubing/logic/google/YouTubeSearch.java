@@ -53,11 +53,6 @@ public class YouTubeSearch extends YouTubeAPI {
         return search(query, Type.Video);
     }
 
-    public String searchPlayList(String query) {
-
-        return search(query, Type.PlayList);
-    }
-
     private String search(String query, Type type) {
 
         String id = null;
