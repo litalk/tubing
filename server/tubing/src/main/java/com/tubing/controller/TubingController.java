@@ -26,6 +26,9 @@ public class TubingController {
     @Autowired
     private EntityFetcher _fetcher;
 
+    @RequestMapping(value = "health", method = RequestMethod.GET)
+    public void health() {}
+
     @RequestMapping(value = "playlist/{playlist-id}/items", method = RequestMethod.POST)
     public void playlist(HttpServletRequest request, @PathVariable("playlist-id") String playlistId, @RequestBody String query)
             throws UnsupportedEncodingException {

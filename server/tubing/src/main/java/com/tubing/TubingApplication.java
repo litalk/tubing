@@ -15,14 +15,12 @@ import com.tubing.controller.JwtFilter;
 public class TubingApplication {
 
     public static String NAME = "Tubing";
-    @Autowired
-    private EntityFetcher _fetcher;
 
     @Bean
     public FilterRegistrationBean jwtFilter() {
 
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(new JwtFilter(_fetcher));
+        registrationBean.setFilter(new JwtFilter());
         registrationBean.addUrlPatterns("/tubing/api/*");
 
         return registrationBean;

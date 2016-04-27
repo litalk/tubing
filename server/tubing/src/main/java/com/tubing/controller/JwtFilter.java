@@ -10,16 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.tubing.dal.EntityFetcher;
-
 public class JwtFilter extends GenericFilterBean {
-    
-    private EntityFetcher _fetcher;
-
-    public JwtFilter(EntityFetcher fetcher) {
-        
-        _fetcher = fetcher;
-    }
     
     @Override
     public void doFilter(
