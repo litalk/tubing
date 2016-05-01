@@ -1,7 +1,6 @@
 package com.tubing.common;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -12,11 +11,10 @@ import java.text.SimpleDateFormat;
 public class ObjectMapperUtils {
 
     private static final ObjectMapper _mapper = new ObjectMapper();
-    private static final JsonFactory _jsonFactory = new JsonFactory(_mapper);
 
     static {
         _mapper.setDateFormat(new SimpleDateFormat(TubingConstants.DATE_FORMAT));
-        _mapper.setVisibilityChecker(_mapper.getSerializationConfig().getDefaultVisibilityChecker()
+        _mapper.setVisibility(_mapper.getSerializationConfig().getDefaultVisibilityChecker()
                 .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
                 .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
                 .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
@@ -49,10 +47,6 @@ public class ObjectMapperUtils {
         }
 
         return ret;
-    }
-
-    public static JsonFactory getJsonFactory() {
-        return _jsonFactory;
     }
 
     public static <T> T to(JsonNode node, Class<T> clazz) {
