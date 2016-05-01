@@ -1,22 +1,25 @@
 package com.tubing.logic.google;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.tubing.common.TubingException;
+
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.json.jackson2.JacksonFactory;
-
 public class SecretsContainer {
 
+    public static final String SECRETS_FILE = "src/main/resources/client_secret_windy.json";
     private static GoogleClientSecrets _secrets;
 
     public synchronized static GoogleClientSecrets get() {
 
         if (_secrets == null) {
             try {
-                _secrets = GoogleClientSecrets.load(JacksonFactory.getDefaultInstance(), new FileReader("src/main/resources/windy.json"));
+                _secrets = GoogleClientSecrets.load(JacksonFactory.getDefaultInstance(),
+                        new FileReader(SECRETS_FILE));
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new TubingException("Failed loading GoogleClientSecrets", e);
             }
         }
 

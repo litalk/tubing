@@ -1,17 +1,15 @@
 package com.tubing.controller;
 
-import java.util.Date;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-
-import org.mortbay.jetty.HttpHeaders;
-
+import com.tubing.common.TubingException;
 import com.tubing.logic.google.SecretsContainer;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.mortbay.jetty.HttpHeaders;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 public class JwtHelper {
     
@@ -37,7 +35,7 @@ public class JwtHelper {
         
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new RuntimeException("Missing or invalid Authorization header");
+            throw new TubingException("Missing or invalid Authorization header");
         }
         
         return authHeader.substring("Bearer ".length());

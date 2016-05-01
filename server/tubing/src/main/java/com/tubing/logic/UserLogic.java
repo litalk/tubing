@@ -1,28 +1,27 @@
 package com.tubing.logic;
 
-import java.io.IOException;
-import java.net.URLDecoder;
-import java.security.GeneralSecurityException;
-import java.util.Arrays;
-
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.MediaType;
-
-import com.tubing.common.StringUtils;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.tubing.common.StringUtils;
+import com.tubing.common.TubingException;
 import com.tubing.dal.EntityPersister;
 import com.tubing.dal.model.Account;
 import com.tubing.logic.google.SecretsContainer;
 import com.tubing.rest.RestClientImpl;
 import com.tubing.rest.RestClientResponse;
 import com.tubing.rest.RestRequest;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.security.GeneralSecurityException;
+import java.util.Arrays;
 
 @Component
 public class UserLogic {
@@ -42,7 +41,7 @@ public class UserLogic {
                 }
             }
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            throw new TubingException("Account login failed", ex);
         }
         
         return ret;
@@ -96,7 +95,7 @@ public class UserLogic {
                             json.getString("access_token"),
                             json.getString("refresh_token"));
         } catch (Exception e) {
-            throw new RuntimeException(
+            throw new TubingException(
                     "Failed to exchange auth code for access and refresh token",
                     e);
         }
@@ -118,7 +117,7 @@ public class UserLogic {
         .setIssuer("https://accounts.google.com").build();
         GoogleIdToken ret = verifier.verify(idToken);
         if (ret == null) {
-            throw new RuntimeException("Token cannot be parsed");
+            throw new TubingException("Token cannot be parsed");
         }
         
         return ret;

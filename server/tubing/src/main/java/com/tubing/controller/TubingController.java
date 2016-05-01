@@ -1,21 +1,20 @@
 package com.tubing.controller;
 
-import java.io.UnsupportedEncodingException;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.google.api.services.youtube.YouTube;
+import com.tubing.common.TubingException;
 import com.tubing.dal.EntityFetcher;
 import com.tubing.dal.model.Session;
 import com.tubing.logic.UIDGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import com.google.api.services.youtube.YouTube;
 import com.tubing.logic.google.YouTubeBuilder;
 import com.tubing.logic.google.YouTubePlaylist;
 import com.tubing.logic.google.YouTubeSearch;
 import com.tubing.logic.processor.QueryProcessor;
 import com.tubing.logic.processor.QueryProcessorFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequestMapping("/tubing/api")
@@ -50,7 +49,7 @@ public class TubingController {
         String key = UIDGenerator.generate(Session.TYPE, (String) request.getAttribute("session-id"));
         Session session = _fetcher.get(key, Session.class);
         if (session == null) {
-            throw new RuntimeException("Session not found, please login again.");
+            throw new TubingException("Session not found, please login again.");
         }
 
         return session.getUserId();

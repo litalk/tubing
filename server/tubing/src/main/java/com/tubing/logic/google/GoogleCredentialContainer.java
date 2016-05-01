@@ -11,6 +11,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.youtube.YouTubeScopes;
+import com.tubing.common.TubingException;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class GoogleCredentialContainer {
                     flow, new LocalServerReceiver()).authorize("user");
             System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new TubingException("Failed to authorize", e);
         }
 
         return ret;
