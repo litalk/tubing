@@ -1,10 +1,11 @@
 package com.tubing.logic.google;
 
-import java.io.IOException;
-
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.*;
 import com.tubing.common.StringUtils;
+import com.tubing.common.TubingException;
+
+import java.io.IOException;
 
 public class YouTubePlaylist extends YouTubeAPI {
     
@@ -20,7 +21,7 @@ public class YouTubePlaylist extends YouTubeAPI {
         try {
             insertPlaylistItem(getPlaylist(playlistId), videoId);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new TubingException("Failed adding video to playlist", e);
         }
     }
     
