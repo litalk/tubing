@@ -7,7 +7,7 @@
     <context:component-scan base-package="com.tubing"/>
 
     <bean id="redisClient" class="com.tubing.dal.redis.RedisClient">
-        <constructor-arg index="0" value="16.60.242.52"/>
+        <constructor-arg index="0" value="localhost"/>
         <constructor-arg index="1" value="6379"/>
     </bean>
 

@@ -1,6 +1,7 @@
 package com.tubing.controller;
 
 import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.model.Playlist;
 import com.tubing.common.TubingException;
 import com.tubing.dal.EntityFetcher;
 import com.tubing.dal.model.Session;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/tubing/api")
@@ -29,12 +31,22 @@ public class TubingController {
     public void health() {}
 
     @RequestMapping(value = "playlist/{playlist-id}/items", method = RequestMethod.POST)
-    public void playlist(HttpServletRequest request, @PathVariable("playlist-id") String playlistId, @RequestBody String query)
+    public void addItem(HttpServletRequest request, @PathVariable("playlist-id") String playlistId, @RequestBody String query)
             throws UnsupportedEncodingException {
             
         YouTube youTube = _builder.build(getUserId(request));
         final String youtubeQuery = extractYoutubeQuery(query);
         new YouTubePlaylist(youTube).update(playlistId, new YouTubeSearch(youTube).searchVideo(youtubeQuery));
+    }
+
+    @RequestMapping(value = "playlist", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<Playlist> get(HttpServletRequest request)
+            throws UnsupportedEncodingException {
+
+        YouTube youTube = _builder.build(getUserId(request));
+
+        return new YouTubePlaylist(youTube).getPlaylists();
     }
     
     private String extractYoutubeQuery(String query) {

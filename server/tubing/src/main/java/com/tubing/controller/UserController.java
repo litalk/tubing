@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     private EntityPersister _persister;
 
-    @RequestMapping(value = "login", method = RequestMethod.POST, headers = {"Content-Type=application/json"})
+    @RequestMapping(value = "login", method = RequestMethod.POST, consumes = "application/json")
     public LoginResponse login(@RequestBody final String authCode) throws ServletException {
 
         Account account = null;

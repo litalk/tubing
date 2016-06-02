@@ -6,6 +6,7 @@ import com.tubing.common.StringUtils;
 import com.tubing.common.TubingException;
 
 import java.io.IOException;
+import java.util.List;
 
 public class YouTubePlaylist extends YouTubeAPI {
     
@@ -29,6 +30,18 @@ public class YouTubePlaylist extends YouTubeAPI {
 
         return StringUtils.isNullOrEmpty(playlistId) || "tubing".equals(playlistId) ?
                 createPlaylist(PLAYLIST_TITLE) : playlistId;
+    }
+
+    public List<Playlist> getPlaylists() {
+
+        PlaylistListResponse listResponse = null;
+        try {
+            listResponse = getYouTube().playlists().list("snippet").setMine(true).execute();
+        } catch (IOException e) {
+            throw new TubingException("Failed retrieving playlists", e);
+        }
+
+        return listResponse.getItems();
     }
     
     /**
@@ -84,7 +97,7 @@ public class YouTubePlaylist extends YouTubeAPI {
         PlaylistItem playlistItem = new PlaylistItem();
         playlistItem.setSnippet(playlistItemSnippet);
         
-        // Call the API to add the playlist item to the specified playlist.
+        // Call the API to addItem the playlist item to the specified playlist.
         // In the API call, the first argument identifies the resource parts
         // that the API response should contain, and the second argument is
         // the playlist item being inserted.
