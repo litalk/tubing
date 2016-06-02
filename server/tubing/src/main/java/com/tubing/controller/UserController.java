@@ -44,7 +44,7 @@ public class UserController {
             ret = new JSONObject(json).getString("auth_code");
         } catch (Exception ex) {
             throw new ServletException(
-                    "Invalid body, should look like {auth_code: <authorization code>}");
+                    String.format("Invalid body: %s, should look like {auth_code: <authorization code>}", json));
         }
 
         return ret;
