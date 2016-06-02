@@ -7,10 +7,7 @@ import com.tubing.dal.model.Session;
 import com.tubing.logic.UserLogic;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +23,7 @@ public class UserController {
     @Autowired
     private EntityPersister _persister;
 
-    @RequestMapping(value = "login", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "login", method = RequestMethod.POST, headers = {"Accept=application/json", "Access-Control-Allow-Origin=*"})
     public LoginResponse login(@RequestBody final String authCode) throws ServletException {
 
         Account account = null;
